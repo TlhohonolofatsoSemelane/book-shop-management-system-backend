@@ -1,5 +1,6 @@
 package auca.ac.bookshopsystem.controller;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import auca.ac.bookshopsystem.model.Reservation;
+import auca.ac.bookshopsystem.model.ReservationStatus;
 import auca.ac.bookshopsystem.service.ReservationService;
 
 @RestController
@@ -35,6 +38,18 @@ public class ReservationController {
     @GetMapping(value = "/all")
     public ResponseEntity<List<Reservation>> getAllReservations() {
         return new ResponseEntity<>(reservationService.getAllReservations(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/by-status")
+    public ResponseEntity<List<Reservation>> getReservationsByStatus(@RequestParam ReservationStatus status) {
+        return new ResponseEntity<>(reservationService.getReservationsByStatus(status), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/between")
+    public ResponseEntity<List<Reservation>> getReservationsBetween(@RequestParam String start, @RequestParam String end) {
+        LocalDate startDate = LocalDate.parse(start);
+        LocalDate endDate = LocalDate.parse(end);
+        return new ResponseEntity<>(reservationService.getReservationsBetween(startDate, endDate), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
