@@ -49,4 +49,8 @@ public class GenreService {
         genreRepository.deleteById(id);
         return "Genre deleted successfully";
     }
+
+    public List<Genre> getUnusedGenres() {
+        return genreRepository.findUnusedGenres();
+    }
 }

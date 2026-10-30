@@ -37,6 +37,11 @@ public class GenreController {
         return new ResponseEntity<>(genreService.getAllGenres(), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/unused")
+    public ResponseEntity<List<Genre>> getUnusedGenres() {
+        return new ResponseEntity<>(genreService.getUnusedGenres(), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getGenreById(@PathVariable UUID id) {
         Optional<Genre> genre = genreService.getGenreById(id);

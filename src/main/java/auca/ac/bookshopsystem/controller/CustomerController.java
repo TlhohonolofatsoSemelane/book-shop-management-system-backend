@@ -48,6 +48,14 @@ public class CustomerController {
         return new ResponseEntity<>(customerService.getCustomersByLastName(lastName), HttpStatus.OK);
     }
 
+    @GetMapping(value = "/of-bookseller/{booksellerId}")
+    public ResponseEntity<?> getCustomersOfBookseller(@PathVariable UUID booksellerId) {
+        if (!customerService.booksellerExists(booksellerId)) {
+            return new ResponseEntity<>("The bookseller with that id does not exist", HttpStatus.NOT_FOUND);
+        }
+        return new ResponseEntity<>(customerService.getCustomersOfBookseller(booksellerId), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getCustomerById(@PathVariable UUID id) {
         Optional<Customer> customer = customerService.getCustomerById(id);

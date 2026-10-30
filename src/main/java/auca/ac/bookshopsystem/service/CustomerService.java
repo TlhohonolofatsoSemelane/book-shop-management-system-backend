@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import auca.ac.bookshopsystem.model.Customer;
+import auca.ac.bookshopsystem.repository.BooksellerRepository;
 import auca.ac.bookshopsystem.repository.CustomerRepository;
 
 @Service
@@ -15,6 +16,9 @@ public class CustomerService {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private BooksellerRepository booksellerRepository;
 
     public String saveCustomer(Customer customer) {
         if (customerRepository.existsByCustomerNumber(customer.getCustomerNumber())) {
@@ -58,5 +62,13 @@ public class CustomerService {
 
     public List<Customer> getCustomersByLastName(String lastName) {
         return customerRepository.findByLastNameIgnoreCaseOrderByFirstNameAsc(lastName);
+    }
+
+    public boolean booksellerExists(UUID booksellerId) {
+        return booksellerRepository.existsById(booksellerId);
+    }
+
+    public List<Customer> getCustomersOfBookseller(UUID booksellerId) {
+        return customerRepository.findCustomersOfBookseller(booksellerId);
     }
 }

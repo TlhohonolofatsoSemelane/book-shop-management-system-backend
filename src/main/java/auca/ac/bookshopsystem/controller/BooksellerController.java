@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import auca.ac.bookshopsystem.model.Bookseller;
@@ -35,6 +36,11 @@ public class BooksellerController {
     @GetMapping(value = "/all")
     public ResponseEntity<List<Bookseller>> getAllBooksellers() {
         return new ResponseEntity<>(booksellerService.getAllBooksellers(), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/by-genre")
+    public ResponseEntity<List<Bookseller>> getBooksellersByGenre(@RequestParam String name) {
+        return new ResponseEntity<>(booksellerService.getBooksellersByGenre(name), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")

@@ -51,4 +51,8 @@ public class BooksellerService {
         booksellerRepository.deleteById(id);
         return "Bookseller deleted successfully";
     }
+
+    public List<Bookseller> getBooksellersByGenre(String name) {
+        return booksellerRepository.findBooksellersByGenreName(name);
+    }
 }
