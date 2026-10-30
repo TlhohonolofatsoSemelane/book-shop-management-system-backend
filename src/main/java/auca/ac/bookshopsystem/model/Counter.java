@@ -16,11 +16,6 @@ public class Counter {
 
     public Counter() {}
 
-    public Counter(int counterNumber, String name) {
-        this.counterNumber = counterNumber;
-        this.name = name;
-    }
-
     public UUID getId() { return id; }
     public int getCounterNumber() { return counterNumber; }
     public void setCounterNumber(int counterNumber) { this.counterNumber = counterNumber; }

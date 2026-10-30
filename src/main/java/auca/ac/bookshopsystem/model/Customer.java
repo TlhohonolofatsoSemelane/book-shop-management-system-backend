@@ -20,13 +20,6 @@ public class Customer {
 
     public Customer() {}
 
-    public Customer(String firstName, String lastName, String customerNumber, String email) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.customerNumber = customerNumber;
-        this.email = email;
-    }
-
     public UUID getId() { return id; }
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }

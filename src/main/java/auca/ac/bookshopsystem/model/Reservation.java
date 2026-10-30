@@ -30,13 +30,6 @@ public class Reservation {
 
     public Reservation() {}
 
-    public Reservation(LocalDate reservationDate, String note, Customer customer, Bookseller bookseller) {
-        this.reservationDate = reservationDate;
-        this.note = note;
-        this.customer = customer;
-        this.bookseller = bookseller;
-    }
-
     public UUID getId() { return id; }
     public LocalDate getReservationDate() { return reservationDate; }
     public void setReservationDate(LocalDate reservationDate) { this.reservationDate = reservationDate; }

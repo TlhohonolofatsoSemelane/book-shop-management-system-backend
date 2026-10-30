@@ -30,13 +30,6 @@ public class Bookseller {
 
     public Bookseller() {}
 
-    public Bookseller(String firstName, String lastName, String phone, Counter counter) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phone = phone;
-        this.counter = counter;
-    }
-
     public UUID getId() { return id; }
     public String getFirstName() { return firstName; }
     public void setFirstName(String firstName) { this.firstName = firstName; }
