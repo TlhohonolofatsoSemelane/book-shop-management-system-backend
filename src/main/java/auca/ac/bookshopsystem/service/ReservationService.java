@@ -19,6 +19,18 @@ public class ReservationService {
     private ReservationRepository reservationRepository;
 
     public String saveReservation(Reservation reservation) {
+        if (reservation.getReservationDate().isBefore(LocalDate.now())) {
+            return "Reservation date cannot be in the past";
+        }
+
+        boolean alreadyBooked = reservationRepository.existsByBooksellerIdAndReservationDateAndStatusNot(
+                reservation.getBookseller().getId(), reservation.getReservationDate(), ReservationStatus.CANCELLED);
+
+        if (alreadyBooked) {
+            return "Bookseller already prepares a reservation on that date";
+        }
+
+        reservation.setStatus(ReservationStatus.RESERVED);
         reservationRepository.save(reservation);
         return "Reservation saved successfully";
     }
@@ -59,5 +71,34 @@ public class ReservationService {
 
     public List<Reservation> getReservationsBetween(LocalDate start, LocalDate end) {
         return reservationRepository.findByReservationDateBetweenOrderByReservationDateAsc(start, end);
+    }
+
+    public String changeStatus(UUID id, ReservationStatus newStatus) {
+        Optional<Reservation> existingReservation = reservationRepository.findById(id);
+
+        if (existingReservation.isEmpty()) {
+            return "The reservation with that id does not exist";
+        }
+
+        Reservation reservation = existingReservation.get();
+        ReservationStatus currentStatus = reservation.getStatus();
+        boolean allowed = false;
+
+        if (currentStatus == ReservationStatus.RESERVED
+                && (newStatus == ReservationStatus.READY || newStatus == ReservationStatus.CANCELLED)) {
+            allowed = true;
+        }
+        if (currentStatus == ReservationStatus.READY
+                && (newStatus == ReservationStatus.COLLECTED || newStatus == ReservationStatus.CANCELLED)) {
+            allowed = true;
+        }
+
+        if (!allowed) {
+            return "Cannot change status from " + currentStatus + " to " + newStatus;
+        }
+
+        reservation.setStatus(newStatus);
+        reservationRepository.save(reservation);
+        return "Reservation status updated successfully";
     }
 }

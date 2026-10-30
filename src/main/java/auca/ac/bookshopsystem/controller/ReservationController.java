@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,7 +33,14 @@ public class ReservationController {
     @PostMapping(value = "/save")
     public ResponseEntity<?> saveReservation(@RequestBody Reservation reservation) {
         String returnedMessage = reservationService.saveReservation(reservation);
-        return new ResponseEntity<>(returnedMessage, HttpStatus.CREATED);
+
+        if (returnedMessage.equals("Reservation saved successfully")) {
+            return new ResponseEntity<>(returnedMessage, HttpStatus.CREATED);
+        } else if (returnedMessage.equals("Reservation date cannot be in the past")) {
+            return new ResponseEntity<>(returnedMessage, HttpStatus.BAD_REQUEST);
+        } else {
+            return new ResponseEntity<>(returnedMessage, HttpStatus.CONFLICT);
+        }
     }
 
     @GetMapping(value = "/all")
@@ -50,6 +58,19 @@ public class ReservationController {
         LocalDate startDate = LocalDate.parse(start);
         LocalDate endDate = LocalDate.parse(end);
         return new ResponseEntity<>(reservationService.getReservationsBetween(startDate, endDate), HttpStatus.OK);
+    }
+
+    @PatchMapping(value = "/{id}/status")
+    public ResponseEntity<?> changeStatus(@PathVariable UUID id, @RequestParam ReservationStatus status) {
+        String returnedMessage = reservationService.changeStatus(id, status);
+
+        if (returnedMessage.equals("Reservation status updated successfully")) {
+            return new ResponseEntity<>(returnedMessage, HttpStatus.OK);
+        } else if (returnedMessage.equals("The reservation with that id does not exist")) {
+            return new ResponseEntity<>(returnedMessage, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<>(returnedMessage, HttpStatus.BAD_REQUEST);
+        }
     }
 
     @GetMapping(value = "/{id}")

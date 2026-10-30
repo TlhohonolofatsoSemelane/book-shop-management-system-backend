@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -41,6 +42,32 @@ public class BooksellerController {
     @GetMapping(value = "/by-genre")
     public ResponseEntity<List<Bookseller>> getBooksellersByGenre(@RequestParam String name) {
         return new ResponseEntity<>(booksellerService.getBooksellersByGenre(name), HttpStatus.OK);
+    }
+
+    @PutMapping(value = "/{booksellerId}/genres/{genreId}")
+    public ResponseEntity<?> addGenreToBookseller(@PathVariable UUID booksellerId, @PathVariable UUID genreId) {
+        String returnedMessage = booksellerService.addGenreToBookseller(booksellerId, genreId);
+
+        if (returnedMessage.equals("Genre added to the bookseller")) {
+            return new ResponseEntity<>(returnedMessage, HttpStatus.OK);
+        } else if (returnedMessage.equals("The bookseller already has that genre")) {
+            return new ResponseEntity<>(returnedMessage, HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity<>(returnedMessage, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PatchMapping(value = "/{booksellerId}/counter")
+    public ResponseEntity<?> changeBooksellerCounter(@PathVariable UUID booksellerId, @RequestParam int counterNumber) {
+        String returnedMessage = booksellerService.changeBooksellerCounter(booksellerId, counterNumber);
+
+        if (returnedMessage.equals("Counter changed successfully")) {
+            return new ResponseEntity<>(returnedMessage, HttpStatus.OK);
+        } else if (returnedMessage.equals("That counter is taken by another bookseller")) {
+            return new ResponseEntity<>(returnedMessage, HttpStatus.CONFLICT);
+        } else {
+            return new ResponseEntity<>(returnedMessage, HttpStatus.NOT_FOUND);
+        }
     }
 
     @GetMapping(value = "/{id}")

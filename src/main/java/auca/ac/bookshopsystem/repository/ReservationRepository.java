@@ -16,4 +16,6 @@ public interface ReservationRepository extends JpaRepository<Reservation, UUID> 
     List<Reservation> findByStatusOrderByReservationDateAsc(ReservationStatus status);
 
     List<Reservation> findByReservationDateBetweenOrderByReservationDateAsc(LocalDate start, LocalDate end);
+
+    boolean existsByBooksellerIdAndReservationDateAndStatusNot(UUID booksellerId, LocalDate reservationDate, ReservationStatus status);
 }

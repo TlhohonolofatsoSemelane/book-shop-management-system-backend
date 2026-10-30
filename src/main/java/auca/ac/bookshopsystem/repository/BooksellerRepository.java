@@ -9,10 +9,13 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import auca.ac.bookshopsystem.model.Bookseller;
+import auca.ac.bookshopsystem.model.Counter;
 
 @Repository
 public interface BooksellerRepository extends JpaRepository<Bookseller, UUID> {
 
     @Query("SELECT b FROM Bookseller b JOIN b.genres g WHERE LOWER(g.name) = LOWER(:name)")
     List<Bookseller> findBooksellersByGenreName(@Param("name") String name);
+
+    boolean existsByCounterAndIdNot(Counter counter, UUID id);
 }
