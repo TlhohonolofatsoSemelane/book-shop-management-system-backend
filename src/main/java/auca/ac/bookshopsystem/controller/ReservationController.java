@@ -73,6 +73,17 @@ public class ReservationController {
         }
     }
 
+    @GetMapping(value = "/stats/by-status")
+    public ResponseEntity<List<Object[]>> getReservationCountsPerStatus() {
+        return new ResponseEntity<>(reservationService.getReservationCountsPerStatus(), HttpStatus.OK);
+    }
+
+    @PatchMapping(value = "/cancel-day")
+    public ResponseEntity<String> cancelBooksellerDay(@RequestParam UUID booksellerId, @RequestParam String date) {
+        LocalDate day = LocalDate.parse(date);
+        return new ResponseEntity<>(reservationService.cancelBooksellerDay(booksellerId, day), HttpStatus.OK);
+    }
+
     @GetMapping(value = "/{id}")
     public ResponseEntity<?> getReservationById(@PathVariable UUID id) {
         Optional<Reservation> reservation = reservationService.getReservationById(id);

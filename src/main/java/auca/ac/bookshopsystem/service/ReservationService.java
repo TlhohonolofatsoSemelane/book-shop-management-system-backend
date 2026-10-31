@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import auca.ac.bookshopsystem.model.Reservation;
 import auca.ac.bookshopsystem.model.ReservationStatus;
@@ -109,5 +110,15 @@ public class ReservationService {
         reservation.setStatus(newStatus);
         reservationRepository.save(reservation);
         return "Reservation status updated successfully";
+    }
+
+    public List<Object[]> getReservationCountsPerStatus() {
+        return reservationRepository.countReservationsPerStatus();
+    }
+
+    @Transactional
+    public String cancelBooksellerDay(UUID booksellerId, LocalDate date) {
+        int count = reservationRepository.cancelBooksellerReservationsOnDay(booksellerId, date);
+        return count + " reservations cancelled";
     }
 }
