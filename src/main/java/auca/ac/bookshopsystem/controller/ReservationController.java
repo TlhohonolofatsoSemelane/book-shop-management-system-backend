@@ -101,6 +101,8 @@ public class ReservationController {
 
         if (returnedMessage.equals("Reservation deleted successfully")) {
             return new ResponseEntity<>(returnedMessage, HttpStatus.OK);
+        } else if (returnedMessage.equals("That reservation has purchases, delete them first")) {
+            return new ResponseEntity<>(returnedMessage, HttpStatus.CONFLICT);
         } else {
             return new ResponseEntity<>(returnedMessage, HttpStatus.NOT_FOUND);
         }

@@ -4,7 +4,7 @@ Names: Semelane Temana Tlhohonolofatso
 
 Student ID: 27293
 
-Project: BookShop Management System Backend
+Project: BookShop Management System (Mid-Term Project Examination, INSY 8322 Web Technology and Internet)
 
 ## Technologies
 

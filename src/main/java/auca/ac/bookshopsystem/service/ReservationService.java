@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import auca.ac.bookshopsystem.model.Reservation;
 import auca.ac.bookshopsystem.model.ReservationStatus;
+import auca.ac.bookshopsystem.repository.PurchaseRepository;
 import auca.ac.bookshopsystem.repository.ReservationRepository;
 
 @Service
@@ -17,6 +18,9 @@ public class ReservationService {
 
     @Autowired
     private ReservationRepository reservationRepository;
+
+    @Autowired
+    private PurchaseRepository purchaseRepository;
 
     public String saveReservation(Reservation reservation) {
         if (reservation.getReservationDate().isBefore(LocalDate.now())) {
@@ -58,8 +62,13 @@ public class ReservationService {
     }
 
     public String deleteReservation(UUID id) {
-        if (!reservationRepository.existsById(id)) {
+        Optional<Reservation> existingReservation = reservationRepository.findById(id);
+
+        if (existingReservation.isEmpty()) {
             return "The reservation with that id does not exist";
+        }
+        if (purchaseRepository.existsByReservation(existingReservation.get())) {
+            return "That reservation has purchases, delete them first";
         }
         reservationRepository.deleteById(id);
         return "Reservation deleted successfully";
