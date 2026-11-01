@@ -6,6 +6,8 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -120,5 +122,9 @@ public class ReservationService {
     public String cancelBooksellerDay(UUID booksellerId, LocalDate date) {
         int count = reservationRepository.cancelBooksellerReservationsOnDay(booksellerId, date);
         return count + " reservations cancelled";
+    }
+
+    public Page<Reservation> getReservationsPage(Pageable pageable) {
+        return reservationRepository.findAll(pageable);
     }
 }

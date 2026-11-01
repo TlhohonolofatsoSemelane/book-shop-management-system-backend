@@ -32,4 +32,8 @@ public interface ReservationRepository extends JpaRepository<Reservation, UUID> 
          + "AND r.reservationDate = :date "
          + "AND r.status <> auca.ac.bookshopsystem.model.ReservationStatus.COLLECTED")
     int cancelBooksellerReservationsOnDay(@Param("booksellerId") UUID booksellerId, @Param("date") LocalDate date);
+
+    long countByStatus(ReservationStatus status);
+
+    long countByReservationDate(LocalDate reservationDate);
 }

@@ -1,0 +1,504 @@
+{
+  "info": {
+    "name": "BookShop Management System Mid-Term",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8081"
+    },
+    {
+      "key": "customerId",
+      "value": ""
+    },
+    {
+      "key": "booksellerId",
+      "value": ""
+    },
+    {
+      "key": "genreId",
+      "value": ""
+    },
+    {
+      "key": "reservationId",
+      "value": ""
+    },
+    {
+      "key": "collectedReservationId",
+      "value": ""
+    },
+    {
+      "key": "purchaseId",
+      "value": ""
+    },
+    {
+      "key": "customerNumber",
+      "value": "CU-0042"
+    }
+  ],
+  "item": [
+    {
+      "name": "A2 - Save genre",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/genres/save",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "genres",
+            "save"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"name\": \"Poetry\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "B1 - Customers by last name",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/customers/by-last-name?lastName=semelane",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "customers",
+            "by-last-name"
+          ],
+          "query": [
+            {
+              "key": "lastName",
+              "value": "semelane"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "B2 - Reservations by status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/reservations/by-status?status=RESERVED",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reservations",
+            "by-status"
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": "RESERVED"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "B3 - Reservations between dates",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/reservations/between?start=2026-10-01&end=2026-10-31",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reservations",
+            "between"
+          ],
+          "query": [
+            {
+              "key": "start",
+              "value": "2026-10-01"
+            },
+            {
+              "key": "end",
+              "value": "2026-10-31"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "C1 - Booksellers by genre",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/booksellers/by-genre?name=fiction",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "booksellers",
+            "by-genre"
+          ],
+          "query": [
+            {
+              "key": "name",
+              "value": "fiction"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "C2 - Free counters",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/counters/free",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "counters",
+            "free"
+          ]
+        }
+      }
+    },
+    {
+      "name": "C3 - Unused genres",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/genres/unused",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "genres",
+            "unused"
+          ]
+        }
+      }
+    },
+    {
+      "name": "C4 - Customers of a bookseller",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/customers/of-bookseller/{{booksellerId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "customers",
+            "of-bookseller",
+            "{{booksellerId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "D1 - Save reservation safely",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/reservations/save",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reservations",
+            "save"
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"reservationDate\": \"2026-11-25\",\n  \"status\": \"COLLECTED\",\n  \"note\": \"Status in the body is ignored\",\n  \"customer\": {\n    \"id\": \"{{customerId}}\"\n  },\n  \"bookseller\": {\n    \"id\": \"{{booksellerId}}\"\n  }\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "D2 - Change reservation status",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/reservations/{{reservationId}}/status?status=READY",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reservations",
+            "{{reservationId}}",
+            "status"
+          ],
+          "query": [
+            {
+              "key": "status",
+              "value": "READY"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "D3 - Add genre to bookseller",
+      "request": {
+        "method": "PUT",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/booksellers/{{booksellerId}}/genres/{{genreId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "booksellers",
+            "{{booksellerId}}",
+            "genres",
+            "{{genreId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "D4 - Change bookseller counter",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/booksellers/{{booksellerId}}/counter?counterNumber=4",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "booksellers",
+            "{{booksellerId}}",
+            "counter"
+          ],
+          "query": [
+            {
+              "key": "counterNumber",
+              "value": "4"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "E1 - Save purchase",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": {
+          "raw": "{{baseUrl}}/api/purchases/save?reservationId={{collectedReservationId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "purchases",
+            "save"
+          ],
+          "query": [
+            {
+              "key": "reservationId",
+              "value": "{{collectedReservationId}}"
+            }
+          ]
+        },
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"bookTitle\": \"Things Fall Apart\",\n  \"remarks\": \"Paperback edition\",\n  \"copies\": 2\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      }
+    },
+    {
+      "name": "E2 - Purchases of a customer",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/purchases/customer/{{customerNumber}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "purchases",
+            "customer",
+            "{{customerNumber}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "E3 - Delete purchase",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/purchases/delete/{{purchaseId}}",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "purchases",
+            "delete",
+            "{{purchaseId}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "F1 - Reservations per status",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/reservations/stats/by-status",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reservations",
+            "stats",
+            "by-status"
+          ]
+        }
+      }
+    },
+    {
+      "name": "F2 - Cancel bookseller day",
+      "request": {
+        "method": "PATCH",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/reservations/cancel-day?booksellerId={{booksellerId}}&date=2026-10-20",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reservations",
+            "cancel-day"
+          ],
+          "query": [
+            {
+              "key": "booksellerId",
+              "value": "{{booksellerId}}"
+            },
+            {
+              "key": "date",
+              "value": "2026-10-20"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "name": "Bonus - Dashboard summary",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/dashboard/summary",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "dashboard",
+            "summary"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Bonus - Reservations page",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/reservations/page?page=0&size=5&sort=reservationDate,desc",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "reservations",
+            "page"
+          ],
+          "query": [
+            {
+              "key": "page",
+              "value": "0"
+            },
+            {
+              "key": "size",
+              "value": "5"
+            },
+            {
+              "key": "sort",
+              "value": "reservationDate,desc"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

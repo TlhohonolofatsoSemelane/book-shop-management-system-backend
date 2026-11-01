@@ -17,3 +17,4 @@ Java 21, Spring Boot, Spring Data JPA, PostgreSQL
 3. Open src/main/resources/application.properties and set your PostgreSQL username and password.
 4. Open a terminal in the project folder and run `mvnw spring-boot:run` (on Windows) or `./mvnw spring-boot:run`.
 5. The API runs on http://localhost:8081 and the tables are created automatically.
+6. Import book-shop-management-system-midterm.postman_collection.json in Postman and test the requests.

@@ -6,6 +6,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -82,6 +86,23 @@ public class ReservationController {
     public ResponseEntity<String> cancelBooksellerDay(@RequestParam UUID booksellerId, @RequestParam String date) {
         LocalDate day = LocalDate.parse(date);
         return new ResponseEntity<>(reservationService.cancelBooksellerDay(booksellerId, day), HttpStatus.OK);
+    }
+
+    @GetMapping(value = "/page")
+    public ResponseEntity<Page<Reservation>> getReservationsPage(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "reservationDate,desc") String sort) {
+        String[] sortParts = sort.split(",");
+        String field = sortParts[0];
+        Sort.Direction direction = Sort.Direction.ASC;
+
+        if (sortParts.length > 1) {
+            direction = Sort.Direction.fromString(sortParts[1]);
+        }
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, field));
+        return new ResponseEntity<>(reservationService.getReservationsPage(pageable), HttpStatus.OK);
     }
 
     @GetMapping(value = "/{id}")
